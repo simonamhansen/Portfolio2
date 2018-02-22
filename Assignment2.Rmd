@@ -37,6 +37,7 @@ Questions:
 # Load packages
 library(ggplot2)
 library(rethinking)
+library(cowplot)
 
 # Define grid
 dens=100
@@ -64,12 +65,24 @@ Riccardo.qa = map(alist(w ~ dbinom(6,p), p ~ dunif(0,1)), data=list(w=3)) # Perf
 
 precis(Riccardo.qa) # getting summary
 
-rethinking::plot(Riccardo.qa) # Plot - doesn't work
+# Visualizing quadratic estimation in comparrison to analytic solution
+c <- 3
+q <- 6
+curve( dbeta( x , c+1 , q-c+1 ) , from=0 , to=1 )
+curve(dnorm( x, 0.5, 0.2), lty=2, add = TRUE)
 
 
+# To get samples
+samples = sample(p_grid, prob = Data$posterior, size = 1e4, replace = TRUE)
 
-curve(dnorm( x, 0.5, 0.2), lty=2, add = TRUE) #Doesn't work
+# To plot samples
+plot(samples)
+dens(samples)
 
+# To get the probability < 0.5 from the samples
+sum(Data$posterior[ p_grid < 0.5 ]) 
+
+#There is a 50 % percent chance that Riccardo's knowledge is above chance level 
 ```
 
 2. Estimate all the teachers' knowledge of CogSci. Who's best? Use grid approximation. Comment on the posteriors of Riccardo and Mikkel.
@@ -121,12 +134,68 @@ Riccardo_opt = grid_function(optimistic_prior, 3, 6)
 
 ggplot(Riccardo_opt,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
 
+Kristian_opt=grid_function(optimistic_prior, 2, 2)
+
+ggplot(Kristian_opt,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+
+Josh_opt =grid_function(optimistic_prior, 160, 198)
+
+ggplot(Josh_opt,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+
+Mikkel_opt=grid_function(optimistic_prior, 66, 132)
+
+ggplot(Mikkel_opt,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+
 ```
 
+Riccardo's and Mikkel's posterior distribution are a more optimistic when using the optimistic prior. Kristian's posterior distribution becomes more pessimistic. Josh's posterior seem unaffected by the optimistic prior which makes sense as the prior corresponds roughly to the data.  
 
 4. You go back to your teachers and collect more data (multiply the previous numbers by 100). Calculate their knowledge with both a uniform prior and a normal prior with a mean of 0.8 and a standard deviation of 0.2. Do you still see a difference between the results? Why?
 
+```{r}
+# Using a uniform prior 
+Riccardo_grid100=grid_function(uniform_prior, 300, 600)
+Mikkel_grid100=grid_function(uniform_prior, 6600, 13200)
+Josh_grid100 =grid_function(uniform_prior, 16000, 19800)
+Kristian_grid100=grid_function(uniform_prior, 200, 200)
+
+R_uni_plot=ggplot(Riccardo_grid100,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+
+M_uni_plot=ggplot(Mikkel_grid100,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+
+J_uni_plot=ggplot(Josh_grid100,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+
+K_uni_plot=ggplot(Kristian_grid100,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+
+# Using an optimistic prior
+Riccardo_opt100=grid_function(optimistic_prior, 300, 600)
+Mikkel_opt100=grid_function(optimistic_prior, 6600, 13200)
+Josh_opt100 =grid_function(optimistic_prior, 16000, 19800)
+Kristian_opt100=grid_function(optimistic_prior, 200, 200)
+
+K_opt_plot=ggplot(Kristian_opt100,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+
+R_opt_plot=ggplot(Riccardo_opt100,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+
+J_opt_plot=ggplot(Josh_opt100,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+
+M_opt_plot=ggplot(Mikkel_opt100,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+
+# To compare plots
+plot_grid(M_opt_plot, M_uni_plot)
+plot_grid(K_opt_plot, K_uni_plot)
+plot_grid(J_opt_plot, J_uni_plot)
+plot_grid(R_opt_plot, R_uni_plot)
+
+# Prior is less important having more data
+
+```
+
+There is little difference between the results using the uniform and the optimistic prior when adding more data. We can therefor conclude that as we add more data the influence of the prior becomes less. Also adding more data makes the distribution more narrow. 
+
 5. Imagine you're a skeptic and think your teachers do not know anything about CogSci, given the content of their classes. How would you operationalize that belief?
+
+We would use a skeptic prior (fx mean=0.5, sd = 0.2) indicating that we think their answer will be at chance level. 
 
 6. Optional question: Can you estimate the difference between Riccardo's estimated knowledge and that of each of the other teachers? Would you deem it credible (that is, would you believe that it is actually different)?
 
