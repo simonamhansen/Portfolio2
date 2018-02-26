@@ -71,7 +71,6 @@ q <- 6
 curve( dbeta( x , c+1 , q-c+1 ) , from=0 , to=1 )
 curve(dnorm( x, 0.5, 0.2), lty=2, add = TRUE)
 
-
 # To get samples
 samples = sample(p_grid, prob = Data$posterior, size = 1e4, replace = TRUE)
 
@@ -108,15 +107,15 @@ grid_function=function(prior, correct, questions){
 
 Kristian_grid=grid_function(uniform_prior, 2, 2)
 
-ggplot(Kristian_grid,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+ggplot(Kristian_grid,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability") + ggtitle("Kristian")
 
 Josh_grid =grid_function(uniform_prior, 160, 198)
 
-ggplot(Josh_grid,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+ggplot(Josh_grid,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability") + ggtitle("Josh")
 
 Mikkel_grid=grid_function(uniform_prior, 66, 132)
 
-ggplot(Mikkel_grid,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+ggplot(Mikkel_grid,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability") + ggtitle("Mikkel")
 
 ```
 
@@ -132,19 +131,19 @@ optimistic_prior= dnorm(p_grid, mean = 0.8, sd = 0.2)
 
 Riccardo_opt = grid_function(optimistic_prior, 3, 6)
 
-ggplot(Riccardo_opt,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+ggplot(Riccardo_opt,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability") + ggtitle("Riccardo")
 
 Kristian_opt=grid_function(optimistic_prior, 2, 2)
 
-ggplot(Kristian_opt,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+ggplot(Kristian_opt,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability") + ggtitle("Kristian")
 
 Josh_opt =grid_function(optimistic_prior, 160, 198)
 
-ggplot(Josh_opt,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+ggplot(Josh_opt,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")+ ggtitle("Josh")
 
 Mikkel_opt=grid_function(optimistic_prior, 66, 132)
 
-ggplot(Mikkel_opt,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+ggplot(Mikkel_opt,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability") + ggtitle("Mikkel")
 
 ```
 
@@ -173,13 +172,13 @@ Mikkel_opt100=grid_function(optimistic_prior, 6600, 13200)
 Josh_opt100 =grid_function(optimistic_prior, 16000, 19800)
 Kristian_opt100=grid_function(optimistic_prior, 200, 200)
 
-K_opt_plot=ggplot(Kristian_opt100,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+K_opt_plot=ggplot(Kristian_opt100,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability") + ggtitle("Kristian")
 
-R_opt_plot=ggplot(Riccardo_opt100,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+R_opt_plot=ggplot(Riccardo_opt100,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability") + ggtitle("Riccardo")
 
-J_opt_plot=ggplot(Josh_opt100,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+J_opt_plot=ggplot(Josh_opt100,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability") + ggtitle("Josh")
 
-M_opt_plot=ggplot(Mikkel_opt100,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability")
+M_opt_plot=ggplot(Mikkel_opt100,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability") + ggtitle("Mikkel")
 
 # To compare plots
 plot_grid(M_opt_plot, M_uni_plot)
