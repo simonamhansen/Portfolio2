@@ -79,7 +79,7 @@ plot(samples)
 dens(samples)
 
 # To get the probability < 0.5 from the samples
-sum(Data$posterior[ p_grid < 0.5 ]) 
+sum(samples < 0.5)/1e4 
 
 #There is a 50 % percent chance that Riccardo's knowledge is above chance level 
 ```
@@ -116,6 +116,20 @@ ggplot(Josh_grid,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()
 Mikkel_grid=grid_function(uniform_prior, 66, 132)
 
 ggplot(Mikkel_grid,aes(grid,posterior))+  geom_point()+geom_line()+theme_classic()+  geom_line(aes(grid,prior/dens),color='red')+  xlab("Knowledge of CogSci")+ ylab("posterior probability") + ggtitle("Mikkel")
+
+# To find out who is best using HPDI
+Mikkel_samples = sample(p_grid, prob = Mikkel_grid$posterior, size = 1e4, replace = TRUE)
+
+Josh_samples = sample(p_grid, prob = Josh_grid$posterior, size = 1e4, replace = TRUE)
+
+Kristian_samples = sample(p_grid, prob = Kristian_grid$posterior, size = 1e4, replace = TRUE)
+
+HPDI(samples, prob=0.5) # Riccardo
+HPDI(Kristian_samples, prob=0.5) 
+HPDI(Josh_samples, prob=0.5) 
+HPDI(Mikkel_samples, prob=0.5) 
+
+# According to the Highest Posterior Density Interval Kristian has the best Cog'Sci knowledge 
 
 ```
 
