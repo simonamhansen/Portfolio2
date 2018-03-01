@@ -208,7 +208,7 @@ There is little difference between the results using the uniform and the optimis
 
 5. Imagine you're a skeptic and think your teachers do not know anything about CogSci, given the content of their classes. How would you operationalize that belief?
 
-We would use a skeptic prior (fx mean=0.5, sd = 0.2) indicating that we think their answer will be at chance level. 
+We would use a skeptic prior (fx mean=0.5, sd = 0.1) indicating that we think their answer will be at chance level. 
 
 6. Optional question: Can you estimate the difference between Riccardo's estimated knowledge and that of each of the other teachers? Would you deem it credible (that is, would you believe that it is actually different)?
 
