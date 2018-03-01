@@ -103,6 +103,41 @@ ggplot(Kristian_new,aes(grid,posterior))+  geom_point()+geom_line()+theme_classi
 # Riccardo + Kristian high prediction error (few data points from last time)
 # Josh + Mikkel low prediction ever (many data points from last time)
 
+# Other solution
+
+# To get samples
+Riccardo_samples = sample(p_grid, prob = Riccardo_old$posterior, size = 1e4, replace = TRUE)
+
+Riccardo_right = rbinom(1e4, size = 10, prob = Riccardo_samples)
+simplehist(Riccardo_right)
+
+HPDI(Riccardo_right, prob = 0.68)
+PI(Riccardo_right, prob = 0.68)
+
+Josh_samples = sample(p_grid, prob = Josh_old$posterior, size = 1e4, replace = TRUE)
+
+Josh_right = rbinom(1e4, size = 172, prob = Josh_samples)
+simplehist(Josh_right)
+
+HPDI(Josh_right, prob = 0.68)
+PI(Josh_right, prob = 0.68)
+
+Mikkel_samples = sample(p_grid, prob = Mikkel_old$posterior, size = 1e4, replace = TRUE)
+
+Mikkel_right = rbinom(1e4, size = 65, prob = Mikkel_samples)
+simplehist(Mikkel_right)
+
+HPDI(Mikkel_right, prob = 0.68)
+PI(Mikkel_right, prob = 0.68)
+
+Kristian_samples = sample(p_grid, prob = Kristian_old$posterior, size = 1e4, replace = TRUE)
+
+Kristian_right = rbinom(1e4, size = 12, prob = Kristian_samples)
+simplehist(Kristian_right)
+
+HPDI(Kristian_right, prob = 0.68)
+PI(Kristian_right, prob = 0.68)
+
 ```
 
 
